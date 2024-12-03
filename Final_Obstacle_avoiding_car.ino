@@ -42,11 +42,11 @@ void loop() {
     delay(200);
     
     // Look right, left, and front to find the clearer path
-    int distanceR = lookRight();  // Scan right side
+    int distanceR = lookRight();  
     delay(300);
-    int distanceL = lookLeft();   // Scan left side
+    int distanceL = lookLeft();   
     delay(300);
-    int distanceF = readPing();    // Read the distance in front
+    int distanceF = readPing();    
     delay(100);
 
     // Debug output: print distances
@@ -61,9 +61,9 @@ void loop() {
     char direction = 'F';  // Default direction is forward
 
     if (distanceL < distanceR) {
-      direction = 'R';  // If left is closer, turn right
+      direction = 'R';  
     } else if (distanceR < distanceL) {
-      direction = 'L';  // If right is closer, turn left
+      direction = 'L';  
     }
 
     // Turn in the direction opposite to where the obstacle is closer
@@ -79,7 +79,7 @@ void loop() {
     }
     
   } else {
-    moveForward();  // Continue moving forward if no obstacle is detected
+    moveForward();  
   }
 }
 
@@ -93,7 +93,7 @@ int lookRight() {
 
 int lookLeft() {
   myservo.write(180);  // Rotate servo further to the left for wider detection range
-  delay(800);  // Increased delay for larger servo motion
+  delay(800);  
   int distance = readPing();
   myservo.write(115);  // Return to center position
   return distance;
@@ -103,7 +103,7 @@ int readPing() {
   delay(100);
   int cm = sonar.ping_cm();
   if (cm == 0) {
-    cm = MAX_DISTANCE;  // If no object detected, set max distance
+    cm = MAX_DISTANCE;  
   }
   return cm;
 }
@@ -115,7 +115,6 @@ void moveStop() {
   motor4.run(RELEASE);
 }
 
-// Move forward at max speed
 void moveForward() {
   if (!goesForward) {
     goesForward = true;
@@ -131,7 +130,6 @@ void moveForward() {
   }
 }
 
-// Move backward at max speed
 void moveBackward() {
   goesForward = false;
   motor1.run(BACKWARD);
@@ -145,7 +143,7 @@ void moveBackward() {
   motor4.setSpeed(MAX_SPEED);
 }
 
-// Turn Right (away from left side obstacle)
+// Turn Right 
 void turnRight() {
   // Set all motors to MAX_SPEED for the turn
   motor1.setSpeed(MAX_SPEED);
@@ -160,10 +158,10 @@ void turnRight() {
   motor4.run(BACKWARD);
   delay(3000);  // Adjust the delay based on turn sharpness
   
-  moveStop();  // Stop motors after the turn
+  moveStop();  
 }
 
-// Turn Left (away from right side obstacle)
+// Turn Left 
 void turnLeft() {
   // Set all motors to MAX_SPEED for the turn
   motor1.setSpeed(MAX_SPEED);
@@ -178,5 +176,5 @@ void turnLeft() {
   motor4.run(FORWARD);
   delay(3000);  // Adjust the delay based on turn sharpness
   
-  moveStop();  // Stop motors after the turn
+  moveStop();  
 }
